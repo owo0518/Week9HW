@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 8 講 未加偏壓的 PN 接面｜電子學講義</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.dep{fill:#fff;stroke:var(--muted);stroke-dasharray:5 4;transform-box:fill-box;transform-origin:center}
+.p-hole{fill:#fff;stroke:var(--hole);stroke-width:2}.p-elec{fill:var(--elec)}
+.ion{font:700 20px "Noto Sans TC",sans-serif}.lbl{font:500 14px "Noto Sans TC",sans-serif;fill:var(--ink)}
+@media (prefers-reduced-motion:no-preference){
+.dep{animation:dep 9s ease-in-out infinite}
+.ion,.field{animation:ion 9s ease-in-out infinite}
+.mv-h{animation:mvh 9s ease-in-out infinite}.mv-e{animation:mve 9s ease-in-out infinite}
+@keyframes dep{0%{transform:scaleX(.08)}65%,92%{transform:scaleX(1)}100%{transform:scaleX(.08)}}
+@keyframes ion{0%,20%{opacity:0}65%,92%{opacity:1}100%{opacity:0}}
+@keyframes mvh{0%{transform:translateX(0);opacity:1}45%{transform:translateX(55px);opacity:1}58%{transform:translateX(65px);opacity:0}94%{transform:translateX(0);opacity:0}100%{transform:translateX(0);opacity:1}}
+@keyframes mve{0%{transform:translateX(0);opacity:1}45%{transform:translateX(-55px);opacity:1}58%{transform:translateX(-65px);opacity:0}94%{transform:translateX(0);opacity:0}100%{transform:translateX(0);opacity:1}}}
+</style></head>
+<body><main>
+<p class="top"><a href="../index.html">← 講次列表</a></p>
+<p class="lec">第 8 講</p>
+<h1>未加偏壓的 PN 接面</h1>
+<p class="lead">把 P 型與 N 型接在一起，不接任何電源，接面自己就會長出一道電場。這一講看它怎麼形成、空乏區有多寬、內建電位有多大。</p>
+
+<figure class="hero">
+<svg viewBox="0 0 640 230" role="img" aria-label="PN 接面形成動畫：電洞與電子越過接面擴散並複合，露出固定離子，空乏區變寬">
+<rect x="0" y="20" width="320" height="150" fill="var(--hole-bg)"/><rect x="320" y="20" width="320" height="150" fill="var(--elec-bg)"/>
+<rect class="dep" x="262" y="20" width="116" height="150"/>
+<g class="static"><circle class="p-hole" cx="50" cy="55" r="7"/><circle class="p-hole" cx="110" cy="120" r="7"/><circle class="p-hole" cx="170" cy="70" r="7"/><circle class="p-hole" cx="200" cy="145" r="7"/>
+<circle class="p-elec" cx="430" cy="140" r="6"/><circle class="p-elec" cx="500" cy="60" r="6"/><circle class="p-elec" cx="560" cy="115" r="6"/><circle class="p-elec" cx="600" cy="150" r="6"/></g>
+<g class="mv-h"><circle class="p-hole" cx="235" cy="60" r="7"/><circle class="p-hole" cx="285" cy="95" r="7"/><circle class="p-hole" cx="250" cy="140" r="7"/></g>
+<g class="mv-e"><circle class="p-elec" cx="405" cy="55" r="6"/><circle class="p-elec" cx="355" cy="100" r="6"/><circle class="p-elec" cx="390" cy="145" r="6"/></g>
+<g class="ion" fill="var(--hole)"><text x="275" y="62">−</text><text x="300" y="100">−</text><text x="278" y="145">−</text></g>
+<g class="ion" fill="var(--elec)"><text x="342" y="62">+</text><text x="325" y="105">+</text><text x="350" y="145">+</text></g>
+<line class="field" x1="360" y1="190" x2="280" y2="190" stroke="var(--accent)" stroke-width="3"/><path class="field" d="M280 190l10-6v12z" fill="var(--accent)"/>
+<text class="lbl" x="12" y="16">P 型（多數載子：電洞）</text><text class="lbl" x="628" y="16" text-anchor="end">N 型（多數載子：電子）</text>
+<text class="lbl field" x="320" y="215" text-anchor="middle">內建電場 ℰ（N → P）</text>
+</svg>
+<figcaption>動畫：載子越過接面擴散、複合 → 露出固定離子 → 空乏區變寬，直到電場擋住擴散為止。</figcaption>
+</figure>
+
+<h2>1. 空乏區怎麼形成</h2>
+<ol class="steps">
+<li><b>濃度差極大</b>：P 側電洞多，N 側電子多。</li>
+<li><b>擴散</b>：電洞往 N 側、電子往 P 側移動。</li>
+<li><b>複合</b>（Recombination）：電子掉回價電帶填補電洞，兩者同時消失。</li>
+<li><b>露出空間電荷</b>：可動載子消失，固定離子留下。P 側是負離子 $\rho=-QN_A$，N 側是正離子 $\rho=+QN_D$。</li>
+<li><b>產生電場</b>：由高斯定理 $\dfrac{d\mathcal{E}}{dx}=\dfrac{\rho}{\varepsilon}$，方向由 N 側指向 P 側。</li>
+<li><b>電場阻擋擴散</b>：電場力與擴散力方向相反。</li>
+<li><b>空乏區變寬</b>：越寬，電場越強，阻擋越大（負回饋）。</li>
+<li><b>達到平衡</b>：漂移電流與擴散電流大小相等、方向相反，淨電流為零。</li>
+</ol>
+
+<h2>2. 空乏區（Depletion Region）</h2>
+<p>空乏區內沒有可動的電子與電洞，只剩固定離子。設 $x_p$、$x_n$ 為伸入 P 側、N 側的寬度，總寬度 $W=x_p+x_n$。複合是成對消失，所以兩側露出的電荷量相等：</p>
+<div class="formula">$$x_pN_A=x_nN_D$$<p>電中性條件，A 為截面積時兩邊的 $AQ$ 可約掉。</p></div>
+<div class="callout"><b>摻雜越淡的一側，空乏區越寬。</b>例如 $N_A=10^{17}$、$N_D=10^{16}$，則 $x_n=10\,x_p$。</div>
+
+<h2>3. 內建電場與內建電位 $V_0$</h2>
+<p>平衡時，接面內部自己就有電場，不需要外接電壓。電場對位置積分，得到 P 側到 N 側中性區的電位差，稱為內建電位 $V_0$（Built-in potential）。它對載子形成高度 $QV_0$ 的能量位障，擋住繼續擴散。矽的 $V_0$ 約 $0.6\sim0.8\ \text{V}$。</p>
+<p>$V_0$ 不能用電表直接量，因為探針接觸半導體會產生新的接觸電位差，總和抵消。</p>
+
+<h2>4. 重要公式</h2>
+<div class="formula">$$V_0=V_T\ln\!\left(\frac{N_AN_D}{n_i^2}\right),\quad V_T=\frac{kT}{Q}$$<p>內建電位。摻雜越濃 $V_0$ 越大，但取對數，增加得很慢。</p></div>
+<div class="formula">$$W=\sqrt{\frac{2\varepsilon_s}{Q}\left(\frac{1}{N_A}+\frac{1}{N_D}\right)V_0}$$<p>空乏區總寬度。$\varepsilon_s$ 為矽的介電常數，約 $1.04\times10^{-12}\ \text{F/cm}$；摻雜越濃，$W$ 越窄。</p></div>
+<div class="formula">$$x_p=W\cdot\frac{N_D}{N_A+N_D},\qquad x_n=W\cdot\frac{N_A}{N_A+N_D}$$<p>兩側寬度。記法：$x_p$ 的分子是 $N_D$，$x_n$ 的分子是 $N_A$，兩者交叉。</p></div>
+<div class="formula">$$Q_J=QAN_Ax_p=QAN_Dx_n$$<p>接面電荷，兩側大小相等。</p></div>
+<p><b>計算順序</b>：$N_A,N_D\to V_0\to W\to x_p,x_n\to Q_J$</p>
+<div class="note">補充：最後的 $Q_J$ 展開式 $A\sqrt{2\varepsilon_sQV_0\,\tfrac{N_AN_D}{N_A+N_D}}$ 是由上面公式代入而得，課堂上未逐項念出。</div>
+
+<h2>5. 數字驗證</h2>
+<p>矽，300 K，$N_A=N_D=10^{16}\ \text{cm}^{-3}$：</p>
+<div class="formula">$$V_0=0.0259\times\ln\frac{10^{32}}{(1.5\times10^{10})^2}\approx0.69\ \text{V}$$$$W\approx4.2\times10^{-5}\ \text{cm}=0.42\ \mu\text{m},\quad x_p=x_n\approx0.21\ \mu\text{m}$$<p>$V_0$ 落在 0.6～0.8 V 範圍內；兩側摻雜相同，所以兩側寬度一樣。</p></div>
+
+<h2>6. 最容易搞混的三件事</h2>
+<div class="callout warn">空乏區不是「沒有電荷」，而是<b>沒有可動載子</b>。固定離子正是電場的來源。</div>
+<div class="callout warn">$V_0$ 不是外加電壓，也不能用電表直接量到。</div>
+<div class="callout warn">平衡不是載子停止運動，而是漂移與擴散<b>剛好抵消</b>。</div>
+
+<footer>來源：source-notes/08-pn-junction.md　下一講預告：外加偏壓（順向、逆向）的 PN 接面，也就是二極體的工作原理。</footer>
+</main></body></html>
