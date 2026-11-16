@@ -55,7 +55,7 @@ AGENTS.md               本文件
 - 色彩變數都在 `assets/style.css`，不得在頁面寫死色碼（SVG 內用 `var(--hole)` 這類變數）。
 - 色彩有語意：電洞／P 型＝`--hole` 紅，電子／N 型＝`--elec` 藍，強調與連結＝`--accent` 青綠。新圖也要照此配色。
 - 字體：Noto Sans TC，一種字體即可。
-- 版面：單欄，最大寬 760px，電腦和手機都要能讀。
+- 版面：單欄，最大寬 760px，首頁最寬 1200px，電腦和手機都要能讀。
 - 可用元件：`.lec` `.lead` `.hero` `.formula` `.callout` `.callout.warn` `.note` `.steps`。需要新元件時，先加到 `style.css`，並更新本節清單。
 
 ## 7. 圖與動畫規則
