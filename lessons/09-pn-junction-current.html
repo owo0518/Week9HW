@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 9 講 PN 接面的電流方程式｜電子學講義</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.lbl{font:500 14px "Noto Sans TC",sans-serif;fill:var(--ink)}.ax{stroke:var(--muted);stroke-width:1.5}.iv{fill:none;stroke:var(--accent);stroke-width:4}
+@media (prefers-reduced-motion:no-preference){.iv{stroke-dasharray:700;animation:draw 6s ease-in-out infinite}
+@keyframes draw{0%{stroke-dashoffset:700}60%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:700}}}
+</style></head>
+<body><main>
+<p class="top"><a href="../index.html">← 講次列表</a></p>
+<p class="lec">第 9 講</p>
+<h1>PN 接面的電流方程式</h1>
+<p class="lead">加上偏壓之後，空乏區會變寬或變窄，電流也從零變成有方向性：順向時指數上升，反向時幾乎不導通。這一講從空乏區推到二極體的電流方程式。</p>
+<figure class="hero">
+<svg viewBox="0 0 640 250" role="img" aria-label="二極體 I-V 曲線：反向電流約為負的飽和電流，順向電流隨電壓指數上升">
+<line class="ax" x1="30" y1="190" x2="620" y2="190"/><line class="ax" x1="300" y1="230" x2="300" y2="15"/>
+<path class="iv" d="M40 193 L300 193 C350 193 400 185 430 130 S455 40 470 15"/>
+<text class="lbl" x="612" y="212" text-anchor="end">V（順向為正）</text><text class="lbl" x="308" y="24">I</text>
+<text class="lbl" x="60" y="175">反向：I ≈ −I_S，幾乎不導通</text><text class="lbl" x="490" y="70">順向：指數上升</text>
+</svg>
+<figcaption>動畫：I-V 曲線逐步畫出，反向貼近零，順向在約 0.6～0.7 V 之後急遽上升。</figcaption></figure>
+
+<h2>1. 偏壓下的空乏區</h2>
+<p>下標 0 代表未加偏壓（$W_0$、$x_{p0}$、$x_{n0}$），沒有下標 0 代表加偏壓後。偏壓大小 $V_R$、$V_F$ 都取正值。</p>
+<table><tr><th></th><th>外加電場 vs. 內建電場</th><th>總電位差</th><th>空乏區寬度</th></tr>
+<tr><td>反向偏壓 $V_R$（P 接低、N 接高）</td><td>同向，相加</td><td>$V_0+V_R$</td><td>變寬</td></tr>
+<tr><td>順向偏壓 $V_F$（P 接高、N 接低）</td><td>反向，相減</td><td>$V_0-V_F$</td><td>變窄</td></tr></table>
+<p>原因：電場變強，需要的空間電荷變多；固定離子密度由摻雜決定，只能靠空乏區變寬來多露出離子。順向則相反，外加電壓抵消部分內建電位，等於降低位障。</p>
+<div class="formula">$$W=W_0\sqrt{1+\frac{V_R}{V_0}}\ \ (\text{反向}),\qquad W=W_0\sqrt{1-\frac{V_F}{V_0}}\ \ (\text{順向，}V_F &lt; V_0)$$<p>$x_p$、$x_n$、$Q_J$ 同理乘上相同的係數。</p></div>
+<div class="callout">例：$V_0=0.69$ V、$W_0=0.42\ \mu$m。反向 $V_R=5$ V，$W\approx1.2\ \mu$m（約 3 倍）；順向 $V_F=0.4$ V，$W\approx0.27\ \mu$m。</div>
+
+<h2>2. 順向偏壓：注入、擴散、複合</h2>
+<p>未加偏壓時，中性區載子濃度均勻，沒有梯度，沒有擴散電流：$p_{p0}\approx N_A$、$n_{p0}\approx n_i^2/N_A$、$n_{n0}\approx N_D$、$p_{n0}\approx n_i^2/N_D$。</p>
+<ol class="steps">
+<li><b>注入</b>：外加電場把 P 側電洞、N 側電子都推向空乏區，位障降低後，電洞注入 N 側成為少數載子（電子對稱地注入 P 側）。</li>
+<li><b>交界處濃度指數上升</b>：在 N 側交界 $x=x_n$。</li>
+<li><b>擴散並複合</b>：注入的電洞往內部擴散，遇到大量電子被複合，多出來的濃度隨距離指數下降。</li>
+</ol>
+<div class="formula">$$p_n(x_n)=p_{n0}\,e^{V_F/V_T},\qquad p_n(x)=p_{n0}+p_{n0}\left(e^{V_F/V_T}-1\right)e^{-(x-x_n)/L_p}$$<p>$V_F=0.6$ V 時 $e^{V_F/V_T}\approx1.2\times10^{10}$，少數載子由約 $2.25\times10^4$ 暴增到約 $2.6\times10^{14}\ \text{cm}^{-3}$。</p></div>
+<div class="formula">$$L_p=\sqrt{D_p\tau_p},\qquad L_n=\sqrt{D_n\tau_n}$$<p>$L$ 是擴散長度（被複合前平均能擴散的距離），$\tau$ 是生存時間。活得越久、擴散越強，$L$ 越長。</p></div>
+
+<h2>3. 推導電流方程式</h2>
+<p>對濃度分佈微分，代入 $J_{p,diff}=-QD_p\,dp/dx$，在交界處得到：</p>
+<div class="formula">$$J_{p,diff}(x_n)=\frac{QD_p}{L_p}\,p_{n0}\left(e^{V_F/V_T}-1\right),\qquad J_{n,diff}(-x_p)=\frac{QD_n}{L_n}\,n_{p0}\left(e^{V_F/V_T}-1\right)$$</div>
+<p>各處總電流連續，所以兩側交界處的電流相加就代表整個二極體的電流。係數只含材料參數與面積，電壓只出現在 $\left(e^{V_F/V_T}-1\right)$。代入 $p_{n0}\approx n_i^2/N_D$、$n_{p0}\approx n_i^2/N_A$ 並定義飽和電流：</p>
+<div class="formula">$$I_S=AQn_i^2\left(\frac{D_p}{L_pN_D}+\frac{D_n}{L_nN_A}\right),\qquad I_{PN}=I_S\left(e^{V_F/V_T}-1\right)$$<p>$I_S\propto A$ 且 $\propto n_i^2$，而 $n_i^2=BT^3e^{-E_G/kT}$ 是溫度的強函式，所以二極體電流也強烈隨溫度改變。$I_S$ 約 $10^{-18}\sim10^{-12}$ A，非常小。</p></div>
+<table><tr><th>$V_F$</th><th>$e^{V_F/V_T}$</th><th>$I$（假設 $I_S=10^{-14}$ A）</th></tr>
+<tr><td>0.5 V</td><td>$2.4\times10^8$</td><td>約 2.4 μA</td></tr><tr><td>0.6 V</td><td>$1.2\times10^{10}$</td><td>約 0.12 mA</td></tr><tr><td>0.7 V</td><td>$5.5\times10^{11}$</td><td>約 5.5 mA</td></tr></table>
+<div class="callout">電壓每增加約 $V_T\ln10\approx59.6$ mV，電流變 10 倍。所以導通電壓看起來「約固定在 0.6～0.7 V」。</div>
+
+<h2>4. 反向偏壓與統一方程式</h2>
+<p>反向時把 $V_F$ 換成 $-V_R$：交界處少數載子 $p_n(x_n)=p_{n0}e^{-V_R/V_T}$ 下降，內部濃度高於交界處，少數載子由內部往接面擴散，方向與順向相反，所以電流為負。</p>
+<div class="formula">$$I_{PN}=I_S\left(e^{V_{apply}/V_T}-1\right)$$<p>$V_{apply}>0$ 為順向，$V_{apply}<0$ 為反向。此式即二極體理想電流方程式，又稱 Shockley 方程式（此名稱為補充）。</p></div>
+<table><tr><th></th><th>條件</th><th>近似</th></tr>
+<tr><td>順向</td><td>$V_{apply}\gg V_T$，括號中的 $-1$ 可忽略</td><td>$I\approx I_Se^{V_{apply}/V_T}$</td></tr>
+<tr><td>反向</td><td>$-V_{apply}\gg V_T$，指數項趨近 0</td><td>$I\approx-I_S$（飽和電流名稱由來）</td></tr></table>
+<p>結論：順向時電流指數上升而導通；反向時只有極小的 $I_S$，可視為不導通。這就是二極體「單向導通」的來源。</p>
+
+<h2>5. 最容易搞混的三件事</h2>
+<div class="callout warn">順向電流是少數載子<b>注入後擴散</b>形成的，不是多數載子直接穿過去。</div>
+<div class="callout warn">括號裡的「$-1$」：順向時可忽略，反向時才是主角，讓電流變成 $-I_S$。</div>
+<div class="callout warn">$V_{apply}$ 帶正負號（順向為正、反向為負），不要跟 $V_F$、$V_R$（皆為正值）混用。</div>
+<footer>來源：source-notes/09-pn-junction-current.md　下一講：反向崩潰與電容。</footer>
+</main></body></html>

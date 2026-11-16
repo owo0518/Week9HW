@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 11 講 理想二極體的特性與應用｜電子學講義</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.lbl{font:500 14px "Noto Sans TC",sans-serif;fill:var(--ink)}.ax{stroke:var(--line);stroke-width:1.5}.vin{fill:none;stroke:var(--muted);stroke-width:3}.vout{fill:none;stroke:var(--accent);stroke-width:4}
+@media (prefers-reduced-motion:no-preference){.vout{stroke-dasharray:900;animation:draw 6s ease-in-out infinite}
+@keyframes draw{0%{stroke-dashoffset:900}60%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:900}}}
+</style></head>
+<body><main>
+<p class="top"><a href="../index.html">← 講次列表</a></p>
+<p class="lec">第 11 講</p>
+<h1>理想二極體的特性與應用</h1>
+<p class="lead">先把二極體簡化成一個開關：順向是導線，反向是斷路。光靠這個簡單規則，就能做出整流器和邏輯閘。</p>
+<figure class="hero">
+<svg viewBox="0 0 640 260" role="img" aria-label="半波整流：上方是弦波輸入，下方輸出只保留正半週">
+<g transform="translate(0,-45)"><line class="ax" x1="40" y1="110" x2="610" y2="110"/><path class="vin" d="M60 110 C90 40,160 40,190 110 C220 180,290 180,320 110 C350 40,420 40,450 110 C480 180,550 180,580 110"/></g>
+<g transform="translate(0,75)"><line class="ax" x1="40" y1="110" x2="610" y2="110"/><path class="vout" d="M60 110 C90 40,160 40,190 110 L320 110 C350 40,420 40,450 110 L580 110"/></g>
+<text class="lbl" x="44" y="22">輸入 v_I</text><text class="lbl" x="44" y="142">輸出 v_O</text>
+</svg>
+<figcaption>動畫：二極體在正半週導通、負半週斷路，輸出只剩單一極性。</figcaption></figure>
+
+<h2>1. 理想二極體的特性</h2>
+<p>二極體是兩端點元件：陽極（Anode，對應 P 型）與陰極（Cathode，對應 N 型）。偏壓定義為 $V=V_{陽極}-V_{陰極}$。</p>
+<table><tr><th>狀態</th><th>條件</th><th>等效電路</th><th>等效電阻</th><th>理由</th></tr>
+<tr><td>順向</td><td>$V>0$</td><td>短路</td><td>$0$</td><td>有電流、無電壓降，$V_D=0$</td></tr>
+<tr><td>反向</td><td>$V<0$</td><td>開路</td><td>$\infty$</td><td>有電壓、無電流，$I=0$</td></tr></table>
+<p>$I$-$V$ 曲線：反向沿橫軸（$I=0$），順向沿縱軸（$V=0$）。</p>
+<div class="note">補充：電路符號是三角形加一條豎線，三角形指向陰極，也就是順向電流的方向。</div>
+
+<h2>2. 電路範例：5 V 電源、5 kΩ 電阻、二極體串聯</h2>
+<table><tr><th></th><th>二極體狀態</th><th>電流</th><th>二極體電壓</th></tr>
+<tr><td>正接（陽極接電源側）</td><td>短路</td><td>$5\ \text{V}/5\ \text{k}\Omega=1\ \text{mA}$</td><td>$0\ \text{V}$</td></tr>
+<tr><td>反接（陰極接電源側）</td><td>開路</td><td>$0$</td><td>$-5\ \text{V}$</td></tr></table>
+<div class="callout">反接時電流為 0，電阻上沒有壓降，陽極經電阻接地為 0 V，陰極為 5 V，所以斷路的二極體<b>扛住整個電源電壓</b>。</div>
+
+<h2>3. 應用一：整流器（Rectifier）</h2>
+<p>電路：弦波電壓源 $v_I$ → 二極體 $D$ → 電阻 $R$，輸出 $v_O$ 取自 $R$ 兩端。</p>
+<table><tr><th></th><th>$D$ 的狀態</th><th>輸出</th></tr>
+<tr><td>正半週</td><td>順向，短路</td><td>$v_O=v_I$</td></tr><tr><td>負半週</td><td>反向，開路，$i=0$</td><td>$v_O=iR=0$</td></tr></table>
+<p>把正負極性轉成單一極性，稱為整流器。二極體反接時，正半週 $v_O=0$、負半週 $v_O=v_I$，輸出只剩負極性。所以二極體的接法方向決定輸出電壓的極性。</p>
+<div class="note">補充：只保留半個週期，也稱半波整流器。例：$v_I=5\sin\omega t$ V，正接輸出 0～5 V 的半個正弦波，反接輸出 −5～0 V。真實矽二極體導通時有約 0.7 V 壓降，輸出峰值會少約 0.7 V，下一講處理。</div>
+
+<h2>4. 應用二：邏輯閘（Logic Gate）</h2>
+<p>位元 0 對應低電位 0 V，位元 1 對應高電位 5 V。邏輯運算的「$+$」是 OR、「$\cdot$」是 AND，不是一般加減乘除，所以 $1+1=1$。</p>
+<div class="note">本節的電路接法依稿中的行為描述還原，筆記中並未附電路圖。</div>
+<h2>4.1 OR 閘：$Y=A+B+C$</h2>
+<p>每個輸入接一顆二極體的陽極，陰極共接為輸出 $V_Y$，輸出經電阻接地。任一輸入為高電位，該二極體導通，輸出被拉高；全部為 0 V 時沒有二極體導通，輸出為 0 V。</p>
+<p>例：$V_A=5$ V，$V_B=V_C=0$ V。二極體 A 導通（陽極 5 V、陰極 5 V），B、C 反向（陽極 0 V、陰極 5 V），所以 $V_Y=5$ V。電位最高的輸入「贏」，其他二極體被反向偏壓自動隔離。</p>
+<h2>4.2 AND 閘：$Y=A\cdot B\cdot C$</h2>
+<p>每個輸入接一顆二極體的陰極，陽極共接為輸出 $V_Y$，輸出經電阻接 $+5$ V。任一輸入為低電位，該二極體導通，輸出被拉低；全部為 5 V 時兩端電位差為 0，輸出被電源拉到 5 V。</p>
+<p>例：$V_A=V_B=5$ V，$V_C=0$ V。二極體 C 導通，A、B 反向（陽極 0 V、陰極 5 V），所以 $V_Y=0$ V。電位最低的輸入「贏」。</p>
+<table><tr><th></th><th>OR 閘</th><th>AND 閘</th></tr>
+<tr><td>二極體接法</td><td>陽極接輸入，陰極共接輸出</td><td>陰極接輸入，陽極共接輸出</td></tr>
+<tr><td>電阻接法</td><td>輸出接地</td><td>輸出接 $+5$ V</td></tr>
+<tr><td>誰「贏」</td><td>最高電位</td><td>最低電位</td></tr>
+<tr><td>輸出為 1 的條件</td><td>任一輸入為 1</td><td>全部輸入為 1</td></tr></table>
+<div class="note">補充：以上是理想二極體的結果。實際矽二極體有約 0.7 V 壓降，OR 閘高電位約 4.3 V，AND 閘低電位約 0.7 V，多級串接時電壓會逐級損耗，這是實際數位電路改用電晶體的原因之一。</div>
+
+<h2>5. 最容易搞混的三件事</h2>
+<div class="callout warn">斷路的二極體會<b>扛住全部電壓</b>（範例二的 $-5$ V）。斷路是電流為 0，不是電壓為 0。</div>
+<div class="callout warn">OR 與 AND 閘的二極體方向剛好相反，電阻接的位置也不同（接地 vs. 接電源）。</div>
+<div class="callout warn">邏輯運算的「$+$」與「$\cdot$」是 OR 與 AND，不是一般加法乘法（$1+1=1$）。</div>
+<footer>來源：source-notes/11-ideal-diode.md　下一講：真實二極體的模型。</footer>
+</main></body></html>

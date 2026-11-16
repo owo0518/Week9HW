@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 10 講 PN 接面的反向崩潰與電容｜電子學講義</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.lbl{font:500 14px "Noto Sans TC",sans-serif;fill:var(--ink)}.plate{fill:var(--elec-bg);stroke:var(--elec)}.gap{fill:#fff;stroke:var(--muted);stroke-dasharray:5 4;transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){.gap{animation:gap 7s ease-in-out infinite}@keyframes gap{0%,100%{transform:scaleX(.45)}50%{transform:scaleX(1.4)}}}
+</style></head>
+<body><main>
+<p class="top"><a href="../index.html">← 講次列表</a></p>
+<p class="lec">第 10 講</p>
+<h1>反向崩潰與電容特性</h1>
+<p class="lead">反向電壓夠大時，電流會突然暴增，這是崩潰。另一方面，PN 接面的電荷會隨電壓改變，所以它也像一顆電容。這一講分別說明這兩件事。</p>
+<figure class="hero">
+<svg viewBox="0 0 640 200" role="img" aria-label="接面電容像平行板電容：兩側中性區是導電板，空乏區是絕緣層，反向電壓越大空乏區越寬，電容越小">
+<rect class="plate" x="40" y="30" width="215" height="120"/><rect class="plate" x="385" y="30" width="215" height="120"/>
+<rect class="gap" x="255" y="30" width="130" height="120"/>
+<text class="lbl" x="147" y="95" text-anchor="middle">P 側中性區</text><text class="lbl" x="492" y="95" text-anchor="middle">N 側中性區</text>
+<text class="lbl" x="320" y="180" text-anchor="middle">空乏區 W：寬 → C_J 小，窄 → C_J 大</text>
+</svg>
+<figcaption>動畫：空乏區寬度隨偏壓改變。$C_J=A\varepsilon_s/W$，空乏區就是平行板電容的「厚度」。</figcaption></figure>
+
+<h2>1. 反向崩潰（Reverse Breakdown）</h2>
+<p>理想公式顯示反向電流維持在 $I_S$，但反向偏壓超過崩潰電壓 $V_Z$ 後，電流急劇上升。主要機制有兩種。</p>
+<h2>1.1 累增崩潰（Avalanche）</h2>
+<ol class="steps">
+<li>反向偏壓大，空乏區電場很強，直接拉斷共價鍵，產生電子電洞對；中性區擴散進來的少數載子（$I_S$ 的來源）也被加速。</li>
+<li>載子被電場加速，獲得高動能。</li>
+<li>高動能載子撞擊矽晶格，撞出新的電子電洞對，稱為碰撞遊離（Impact Ionization）。</li>
+<li>新載子再被加速、再碰撞，數量像滾雪球般倍增，稱為雪崩效應，形成大電流。</li>
+</ol>
+<p>老師說法：晶格遭碰撞破壞，破壞不可逆。</p>
+<div class="note">補充：累增崩潰本身不一定永久損壞元件，只要限制電流、避免過熱就能恢復；考試或作業依老師的說法回答。</div>
+<h2>1.2 齊納崩潰（Zener）</h2>
+<p>只在 $N_A$ 與 $N_D$ 都很高時發生。邏輯鏈：</p>
+<div class="formula"><p>摻雜很濃 → 空乏區很窄 → 能帶山丘很薄 → 價電帶電子量子穿隧（Quantum Tunnel）到導電帶 → 齊納崩潰</p></div>
+<p>穿隧機率與距離強相關，距離夠窄才會發生。此機制不涉及原子結構損害，可重複使用。</p>
+<div class="note">補充：利用此特性做的元件為齊納二極體，常用於穩壓。</div>
+<table><tr><th></th><th>累增崩潰</th><th>齊納崩潰</th></tr>
+<tr><td>發生條件</td><td>一般摻雜，反向電壓夠大</td><td>$N_A$、$N_D$ 都很高</td></tr>
+<tr><td>空乏區</td><td>較寬</td><td>很窄</td></tr>
+<tr><td>機制</td><td>碰撞遊離、連鎖倍增</td><td>量子穿隧</td></tr>
+<tr><td>撞擊晶格</td><td>是</td><td>否</td></tr>
+<tr><td>老師說法</td><td>不可逆</td><td>可重複使用</td></tr></table>
+
+<h2>2. 電容的定義</h2>
+<div class="formula">$$C=\frac{dQ}{dV}$$<p>重點不是電荷有多少，而是電荷<b>隨電壓變化</b>的行為。這裡是小訊號電容：在直流工作點附近疊加小變化 $\Delta V$，電容是電荷–電壓曲線在工作點的斜率，工作點不同，電容就不同。</p></div>
+
+<h2>3. 接面電容 $C_J$</h2>
+<p>電荷來源是空乏區的固定離子 $Q_J$。偏壓改變，空乏區寬度改變，$Q_J$ 也改變。對 $Q_J$ 微分（$\sqrt{x}$ 的微分是 $1/(2\sqrt{x})$）整理後：</p>
+<div class="formula">$$C_J=\frac{A\varepsilon_s}{W_{R0}}$$<p>與平行板電容 $A\varepsilon_s/d$ 完全相同。兩側中性區有大量可動載子，像兩片導電板；空乏區沒有可動載子，像絕緣層，厚度 $d$ 換成 $W$。</p></div>
+<div class="formula">$$C_J=\frac{C_{J0}}{\sqrt{1+V_{R0}/V_0}}\ \ (\text{反向}),\qquad C_J=\frac{C_{J0}}{\sqrt{1-V_{F0}/V_0}}\ \ (\text{順向}),\qquad C_{J0}=\frac{A\varepsilon_s}{W_0}$$<p>反向越大，電容越小；順向越大，電容越大。</p></div>
+<div class="note">補充：順向公式在 $V_{F0}\to V_0$ 時分母趨近 0，電容會算成無限大，不合理，因為推導假設空乏區內沒有載子。所以順向公式只適用於 $V_{F0}\ll V_0$。</div>
+<div class="callout">例（矽，$V_0=0.69$ V，$W_0=0.42\ \mu$m，$A=10^{-4}\ \text{cm}^2$）：$C_{J0}\approx2.5$ pF；$V_{R0}=5$ V 時，$C_J\approx2.5/2.87\approx0.86$ pF。</div>
+
+<h2>4. 擴散電容 $C_D$</h2>
+<p>電荷來源是順向偏壓時，注入對面中性區、正在擴散的多餘少數載子，稱為擴散電荷 $Q_D$。濃度與電壓是指數關係，電壓小變動就讓 $Q_D$ 大幅改變。直覺類比：水管內現存的水量 $=$ 每秒流量 $\times$ 水停留的時間。</p>
+<div class="formula">$$Q_D=\tau_TI_{PN},\qquad C_D=\frac{dQ_D}{dV_F}=\frac{\tau_T}{V_T}I_{PN}$$<p>$\tau_T$ 是少數載子的傳輸時間（transit time）。順向時 $I_{PN}\gg I_S$，所以 $I_Se^{V_F/V_T}\approx I_{PN}$（此近似為補充的推導細節）。$C_D$ 隨順向偏壓指數上升。</p></div>
+<div class="callout">例：$\tau_T=1$ ns，$I_{PN}=1$ mA，$C_D\approx39$ pF，比前面 $C_J$ 的 2.5 pF 大十幾倍，所以順向時擴散電容常是主角。</div>
+<p><b>反向時：</b>反向電流維持常數 $I_S$，微分後 $C_D=\tau_T\,dI/dV\approx0$。交界處濃度 $p_{n0}e^{-V_R/V_T}$ 只會往 0 靠近，再變也看不出差別。電容看的是電荷的<b>絕對變化量</b>而不是比例：$0.001\to0.0001$ 雖然是 10 倍，但差異只有 $0.0009$，可忽略。所以擴散電容只需在順向時考慮。</p>
+<table><tr><th></th><th>接面電容 $C_J$</th><th>擴散電容 $C_D$</th></tr>
+<tr><td>電荷來源</td><td>空乏區固定離子 $Q_J$</td><td>中性區多餘少數載子 $Q_D$</td></tr>
+<tr><td>變化原因</td><td>空乏區寬度隨電壓改變</td><td>注入載子數量隨電壓改變</td></tr>
+<tr><td>存在的偏壓</td><td>順向與反向</td><td>只在順向</td></tr>
+<tr><td>與偏壓關係</td><td>$\propto1/\sqrt{\text{總電位差}}$</td><td>指數上升</td></tr></table>
+<div class="note">補充：兩種電荷變化同時發生，順向時總電容為 $C_{total}=C_J+C_D$。順向電容大於反向電容。</div>
+
+<h2>5. 最容易搞混的三件事</h2>
+<div class="callout warn">兩種崩潰的差別：累增是「撞出來」，齊納是「穿過去」；齊納需要兩邊都高摻雜。</div>
+<div class="callout warn">接面電容的「厚度」是空乏區寬度 $W$，反向電壓越大 $W$ 越大，$C_J$ 越小。</div>
+<div class="callout warn">擴散電容只在順向才有；反向時看電荷的差異量而不是倍數，所以可忽略。</div>
+<footer>來源：source-notes/10-pn-breakdown-capacitance.md　下一講：理想二極體。</footer>
+</main></body></html>

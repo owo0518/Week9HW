@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 12 講 接面二極體的特性與電路模型｜電子學講義</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.lbl{font:500 14px "Noto Sans TC",sans-serif;fill:var(--ink)}.ax{stroke:var(--muted);stroke-width:1.5}.m1{fill:none;stroke:var(--muted);stroke-width:2.5;stroke-dasharray:6 4}.m2{fill:none;stroke:var(--elec);stroke-width:3}.m3{fill:none;stroke:var(--accent);stroke-width:4}
+@media (prefers-reduced-motion:no-preference){.m3{stroke-dasharray:600;animation:draw 6s ease-in-out infinite}
+@keyframes draw{0%{stroke-dashoffset:600}60%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:600}}}
+</style></head>
+<body><main>
+<p class="top"><a href="../index.html">← 講次列表</a></p>
+<p class="lec">第 12 講</p>
+<h1>接面二極體的特性與電路模型</h1>
+<p class="lead">真實二極體不是開關，順向電壓大約卡在 0.7 V。這一講介紹三種簡化模型，學會在準確與快速之間選擇，再用小訊號模型處理交流。</p>
+<figure class="hero">
+<svg viewBox="0 0 640 250" role="img" aria-label="三種二極體模型的 I-V 曲線：理想二極體在 0 V 轉折，固定壓降模型在 0.7 V 轉折，指數模型是平滑曲線">
+<line class="ax" x1="30" y1="200" x2="620" y2="200"/><line class="ax" x1="250" y1="235" x2="250" y2="15"/>
+<path class="m1" d="M40 200 L250 200 L250 20"/><path class="m2" d="M40 200 L390 200 L390 20"/>
+<path class="m3" d="M40 202 L250 202 C310 202 350 196 380 150 S405 50 415 20"/>
+<text class="lbl" x="612" y="222" text-anchor="end">V</text><text class="lbl" x="258" y="24">I</text><text class="lbl" x="390" y="222" text-anchor="middle">0.7 V</text>
+<text class="lbl" x="60" y="60">虛線：理想二極體</text><text class="lbl" x="60" y="84" fill="var(--elec)" style="fill:var(--elec)">藍線：固定壓降 0.7 V</text><text class="lbl" x="60" y="108" style="fill:var(--accent)">綠線：指數模型（最準）</text>
+</svg>
+<figcaption>動畫：指數曲線逐步畫出，其他兩種模型都是用折線逼近它。</figcaption></figure>
+
+<p>符號約定：大寫 $V_D$、$I_D$ 為直流量；小寫 $v_d$、$i_d$ 為交流小訊號；$v_D$、$i_D$ 為總量（直流加交流）。</p>
+
+<h2>1. 真實二極體</h2>
+<table><tr><th></th><th>理想二極體</th><th>真實二極體</th></tr>
+<tr><td>順向</td><td>一加電壓就導通</td><td>約 0.5 V 以上才有明顯電流，更小的電流可近似為斷路</td></tr>
+<tr><td>反向</td><td>完全無電流</td><td>有極小漏電流（即 $I_S$）</td></tr>
+<tr><td>反向大電壓</td><td>無</td><td>崩潰，電流極大</td></tr></table>
+<p><b>溫度的影響</b>：$I_S\propto A$ 且 $\propto n_i^2$，溫度越高 $I_S$ 越大。同樣偏壓下電流越大；反向漏電流隨溫度上升；順向要得到同樣的導通電流，所需偏壓隨溫度上升而下降（順向曲線整條往左移）。</p>
+<div class="note">補充：經驗法則是矽二極體順向壓降約每升溫 1°C 降低 2 mV。</div>
+
+<h2>2. 理想因子 $N$ 與兩點公式</h2>
+<p>實際製作的二極體與推導的理想方程式有些差距，所以加入理想因子 $N$（ideality factor），越接近理想，$N$ 越趨近 1。</p>
+<div class="formula">$$I=I_S\left(e^{V/(NV_T)}-1\right),\quad 1\le N\le2;\qquad I\approx I_Se^{V/(NV_T)}\ \ (I\gg I_S)$$</div>
+<p>偏壓為 $V_1$、$V_2$ 時，電流 $I_1$、$I_2$ 相除，$I_S$ 約掉，取自然對數（$2.3\approx\ln10$）：</p>
+<div class="formula">$$V_2-V_1=NV_T\ln\frac{I_2}{I_1}=2.3\,NV_T\log_{10}\frac{I_2}{I_1}$$<p>不需知道 $I_S$，由一組已知點 $(V_1,I_1)$ 就能推算電流改變後的電壓。實務上規格常只給一組參考值（例如 0.7 V 時 1 mA），電路中電流不同，電壓就會偏離 0.7 V。</p></div>
+<div class="note">補充：$N=1$、$V_T=25.9$ mV，電流變 10 倍，電壓只動約 60 mV（$N=2$ 約 120 mV），所以導通電壓看起來「大約固定」。</div>
+
+<h2>3. 指數模型：電阻串聯二極體</h2>
+<p>電路：$V_{DD}=5$ V、$R=1$ kΩ，二極體規格為 0.7 V 時 1 mA。串聯電流相同，有兩個方程式，聯立求 $V_D$ 與 $I_D$：</p>
+<div class="formula">$$I_D\approx I_Se^{V_D/(NV_T)}\ \ (1),\qquad I_D=\frac{V_{DD}-V_D}{R}\ \ (2)$$</div>
+<p><b>圖解法</b>：以 $V$ 為 X 軸、$I$ 為 Y 軸，畫式 (1)（二極體指數曲線）與式 (2)（直線，橫軸截距 $V_{DD}$、縱軸截距 $V_{DD}/R$），兩者的<b>交點</b>就是解 $(V_D,I_D)$。</p>
+<p><b>迭代法</b>：先猜一個答案，代入算出新答案，再當作下一次的猜測，重複到結果穩定。稿中取 $NV_T=0.1$ V，參考點為 0.7 V、1 mA：</p>
+<table><tr><th>次數</th><th>假設 $I_D$</th><th>算出 $V_D$</th><th>由電阻算出 $I_D$</th></tr>
+<tr><td>1</td><td>1 mA（規格）</td><td>0.7 V</td><td>4.3 mA</td></tr>
+<tr><td>2</td><td>4.3 mA</td><td>$0.7+0.1\log_{10}4.3\approx0.763$ V</td><td>4.237 mA</td></tr>
+<tr><td>3</td><td>4.237 mA</td><td>0.762 V</td><td>4.238 mA</td></tr></table>
+<p>前後兩次電流幾乎相同，停止迭代：$I_D\approx4.238$ mA，$V_D\approx0.762$ V。猜測與算出值的差距從 3.3 mA 縮到 0.063 mA，快速收斂。</p>
+<div class="note">補充：電壓與電流是對數關係，電流猜錯很多，對電壓影響很小，所以收斂很快。$NV_T=0.1$ V 在 $V_T=25$ mV 時相當於 $N=4$，超出 1～2 的範圍，是老師為了好算而選的示範數字，公式用法不受影響。圖解中的直線稱為負載線。</div>
+
+<h2>4. 固定壓降模型</h2>
+<p>指數模型準確但耗時。電子學手算要學的是快速得到誤差可接受的結果，精確值交給電腦。</p>
+<div class="formula"><p>$V<0.7$ V：不導通，開路。導通時：二極體兩端電壓固定為 0.7 V，電流由外部電路決定（等效為 0.7 V 電池加導線，陽極為正）。</p>$$I_D=\frac{5-0.7}{1\ \text{k}\Omega}=4.3\ \text{mA},\qquad \text{誤差}=\frac{4.3-4.238}{4.238}\approx1.5\%$$</div>
+<p>與理想二極體的差別只有轉折點從 0 V 移到 0.7 V。以後遇到 PN 接面二極體的電路分析，大多使用此模型。</p>
+<table><tr><th>模型</th><th>同一電路的結果</th><th>特點</th></tr>
+<tr><td>理想二極體</td><td>$5\ \text{mA}$（誤差約 18%，補充）</td><td>最快，最粗略</td></tr>
+<tr><td>固定壓降 0.7 V</td><td>$4.3\ \text{mA}$（誤差約 1.5%）</td><td>快，夠用</td></tr>
+<tr><td>指數模型＋迭代</td><td>$4.238\ \text{mA}$</td><td>最準，最耗時</td></tr></table>
+<div class="note">補充：此模型假設電流約在 mA 等級；電流差很多時，實際壓降會偏離 0.7 V（電流差 100 倍約差 120 mV，$N=1$），這時要回頭用指數公式修正。</div>
+
+<h2>5. 小訊號模型</h2>
+<p>二極體兩端電壓 $=$ 直流偏壓 $+$ 交流小訊號：$v_D=V_D+v_d$。固定壓降模型屬於直流分析，交流小訊號下要用另一種等效電路。</p>
+<ol class="steps">
+<li>$i_D=I_Se^{(V_D+v_d)/(NV_T)}=I_Se^{V_D/(NV_T)}\cdot e^{v_d/(NV_T)}$，而 $I_Se^{V_D/(NV_T)}=I_D$，所以 $i_D=I_De^{v_d/(NV_T)}$。</li>
+<li>小訊號條件 $v_d/(NV_T)\ll1$，用 $e^x\approx1+x$：$i_D\approx I_D+\dfrac{I_D}{NV_T}v_d$。</li>
+<li>所以交流電流 $i_d=\dfrac{I_D}{NV_T}v_d$，與交流電壓成正比，等效為一個電阻。</li>
+</ol>
+<div class="formula">$$r_d=\frac{v_d}{i_d}=\frac{NV_T}{I_D},\qquad \frac{di_D}{dv_D}=\frac{I_D}{NV_T}=\frac{1}{r_d}$$<p>$r_d$ 是 $I$-$V$ 曲線在工作點斜率的<b>倒數</b>（稿中口述「導數」有混淆，以此式為準）。工作點電流越大，曲線越陡，$r_d$ 越小，與 $I_D$ 成反比。</p></div>
+<div class="note">補充：$N=1$、$V_T=25.9$ mV 時，$I_D=0.1$、1、10 mA 對應 $r_d=259$、25.9、2.59 Ω。</div>
+<table><tr><th></th><th>直流（DC）</th><th>交流小訊號（AC）</th></tr>
+<tr><td>二極體等效</td><td>0.7 V 固定壓降</td><td>電阻 $r_d=NV_T/I_D$</td></tr>
+<tr><td>求什麼</td><td>偏壓點 $V_D$、$I_D$</td><td>小訊號 $v_d$、$i_d$</td></tr></table>
+<p>直流與交流<b>分開獨立分析，最後相加</b>：$v_D=V_D+v_d$，$i_D=I_D+i_d$。</p>
+
+<h2>6. 完整範例</h2>
+<p>直流 $V_{DC}=10$ V，電阻 $R=10$ kΩ，交流訊號源 $v_{ac}=1\cdot\sin\omega t$ V 與直流疊加，與二極體串聯。</p>
+<ol class="steps">
+<li><b>直流分析</b>（固定壓降）：$I_D=\dfrac{10-0.7}{10\ \text{k}\Omega}=0.93$ mA。</li>
+<li><b>交流分析</b>（本例取 $N=2$、$V_T=25$ mV）：$r_d=\dfrac{2\times25\ \text{mV}}{0.93\ \text{mA}}\approx53.8\ \Omega$。交流等效電路為 $R$ 與 $r_d$ 串聯，分壓得 $v_d=1\times\dfrac{53.8}{10000+53.8}\approx5.35$ mV，$i_d=\dfrac{1}{10053.8}\approx0.099$ mA。</li>
+<li><b>疊加</b>：$v_D=0.7+0.00535\sin\omega t$ V，$i_D=0.93+0.099\sin\omega t$ mA。</li>
+</ol>
+<div class="note">補充：驗算小訊號條件，$v_d/(NV_T)=5.35/50\approx0.107\ll1$，近似成立。$r_d\approx54\ \Omega$ 遠小於 $R=10$ kΩ，所以 1 V 的交流訊號幾乎全落在電阻上，二極體只分到 5.35 mV。</div>
+
+<h2>7. 最容易搞混的三件事</h2>
+<div class="callout warn"><b>先直流、後交流</b>：$r_d$ 要用到直流電流 $I_D$，所以一定要先做直流分析。</div>
+<div class="callout warn">直流用 0.7 V 電池，交流用 $r_d$ 電阻，兩種等效電路不能混用。</div>
+<div class="callout warn">交流分析時，直流電壓源視為短路，而且小訊號近似要求 $v_d\ll NV_T$。</div>
+<footer>來源：source-notes/12-junction-diode-models.md　目前已整理到第 12 講。</footer>
+</main></body></html>
