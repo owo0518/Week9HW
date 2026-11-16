@@ -19,6 +19,15 @@ h2{margin:2.6rem 0 .8rem;padding-bottom:.3rem;border-bottom:2px solid var(--ink)
 .steps{padding-left:1.4rem}.steps li{margin:.4rem 0}
 table{border-collapse:collapse;width:100%}th,td{border:1px solid var(--line);padding:.4rem .6rem;text-align:left}
 footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
-.lessons{list-style:none;padding:0}.lessons li{padding:.7rem 0;border-bottom:1px solid var(--line)}
-.lessons .n{display:inline-block;width:3.2rem;font-weight:700;color:var(--accent)}
-.lessons .todo{color:var(--muted)}.lessons small{display:block;margin-left:3.2rem;color:var(--muted)}
+main:has(.lessons){max-width:1200px}
+.lessons{list-style:none;padding:0;margin:1.4rem 0 0;display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.lessons li{display:flex;flex-direction:column;align-items:stretch;padding:1rem;border:1px solid var(--line);border-radius:10px;background:#fff;box-shadow:0 1px 3px rgba(18,38,58,.06)}
+.lessons .n{display:block;width:auto;font-weight:700;font-size:1.4rem;line-height:1.2;color:var(--accent)}
+.lessons a{display:block;margin:.6rem 0 .7rem;padding:.55rem .6rem;border-radius:8px;background:var(--accent);color:#fff;font-weight:500;line-height:1.5;text-align:center;text-decoration:none;transition:background .15s}
+.lessons a:hover{background:#0b5a54}
+.lessons a:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.lessons .todo{color:var(--muted)}
+.lessons small{display:block;margin-left:0;font-size:.85rem;line-height:1.6;color:var(--muted)}
+@media (max-width:1100px){.lessons{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:700px){.lessons{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.lessons{grid-template-columns:1fr}}
