@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 7 講 漂移與擴散｜電子學講義</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.lbl{font:500 14px "Noto Sans TC",sans-serif;fill:var(--ink)}.e{fill:var(--elec)}.h{fill:#fff;stroke:var(--hole);stroke-width:2.5}
+@media (prefers-reduced-motion:no-preference){.r{animation:r 5s linear infinite}.l{animation:l 5s linear infinite}
+@keyframes r{0%{transform:translateX(0)}100%{transform:translateX(90px)}}@keyframes l{0%{transform:translateX(0)}100%{transform:translateX(-90px)}}}
+</style></head>
+<body><main>
+<p class="top"><a href="../index.html">← 講次列表</a></p>
+<p class="lec">第 7 講</p>
+<h1>漂移與擴散</h1>
+<p class="lead">載子要流動需要驅動力，只有兩種：外加電場推它，或是濃度不均讓它自己擴散。這一講把兩種電流的公式都推出來。</p>
+<figure class="hero">
+<svg viewBox="0 0 640 250" role="img" aria-label="左：漂移，電場使電洞向右、電子向左；右：擴散，載子從高濃度往低濃度移動">
+<defs><linearGradient id="g"><stop offset="0" stop-color="var(--elec)"/><stop offset="1" stop-color="var(--elec-bg)"/></linearGradient></defs>
+<text class="lbl" x="20" y="24">漂移：電場 ℰ 推動載子</text><rect x="20" y="40" width="270" height="110" fill="#fff" stroke="var(--line)"/>
+<line x1="40" y1="190" x2="270" y2="190" stroke="var(--accent)" stroke-width="3"/><path d="M270 190l-10-6v12z" fill="var(--accent)"/><text class="lbl" x="40" y="215">ℰ →</text>
+<circle class="h r" cx="60" cy="75" r="8"/><circle class="h r" cx="100" cy="125" r="8"/><circle class="e l" cx="250" cy="75" r="7"/><circle class="e l" cx="210" cy="125" r="7"/>
+<text class="lbl" x="350" y="24">擴散：濃度不均</text><rect x="350" y="40" width="270" height="110" fill="url(#g)" stroke="var(--line)"/>
+<line x1="380" y1="95" x2="590" y2="95" stroke="var(--ink)" stroke-width="3"/><path d="M590 95l-10-6v12z" fill="var(--ink)"/>
+<text class="lbl" x="352" y="175">高濃度</text><text class="lbl" x="578" y="175" text-anchor="end">低濃度</text><text class="lbl" x="352" y="215">載子由濃往淡處移動</text>
+</svg>
+<figcaption>動畫：電洞順著電場向右，電子逆著電場向左，但電子向左等於電流向右，兩者電流方向相同。</figcaption></figure>
+
+<h2>0. 先備知識</h2>
+<p>載子（電子濃度 $n$、電洞濃度 $p$）可移動；空間電荷 $N_D^+$、$N_A^-$ 固定不動，不貢獻電流。質量作用定律 $n_0p_0=n_i^2$，矽在 300 K 時 $n_i\approx1.5\times10^{10}\ \text{cm}^{-3}$。</p>
+
+<h2>1. 兩種驅動機制</h2>
+<table><tr><th></th><th>驅動力</th><th>名稱</th></tr>
+<tr><td>漂移</td><td>外加電場 $\mathcal{E}$ 推動載子</td><td>漂移電流 Drift current</td></tr>
+<tr><td>擴散</td><td>載子濃度不均，由濃往淡</td><td>擴散電流 Diffusion current</td></tr></table>
+
+<h2>2. 漂移電流</h2>
+<p>半導體兩端接電壓 V，內部產生向右的電場。電洞（$+$）向右移動，電子（$-$）向左移動；電子向左等於電流向右，所以兩種載子的漂移電流方向相同，會相加。</p>
+<div class="formula">$$v_p=\mu_p\mathcal{E},\qquad v_n=-\mu_n\mathcal{E}$$<p>遷移率 $\mu$（Mobility）代表每單位電場能換到多少速度；負號代表與電場反向。矽：$\mu_p\approx480$、$\mu_n\approx1350\ \text{cm}^2/(\text{V·s})$，電子較好動。</p></div>
+<p>電流密度 $J=\rho v$。電洞 $\rho_p=Qp$；電子 $\rho_n=-Qn$ 且 $v_n=-\mu_n\mathcal{E}$，兩個負號相乘為正：</p>
+<div class="formula">$$J_{drift}=Q\left(\mu_pp+\mu_nn\right)\mathcal{E}=\sigma\mathcal{E},\qquad \sigma=Q(\mu_pp+\mu_nn)$$<p>$\sigma$ 為導電率（S/cm），電阻率為 $1/\sigma$。$J=\sigma\mathcal{E}$ 就是歐姆定律的材料版，而 $n$、$p$ 可由摻雜控制，所以摻雜是調整半導體電阻的方法。</p></div>
+<div class="callout">數字感受：本質矽 $\sigma\approx4.4\times10^{-6}\ \text{S/cm}$；N 型 $N_D=10^{16}$ 時 $\sigma\approx2.2\ \text{S/cm}$，約為本質矽的 50 萬倍。</div>
+
+<h2>3. 擴散電流</h2>
+<p>載子永遠從高濃度往低濃度擴散，電流密度與濃度梯度成正比，方向要依電荷正負判斷。擴散常數 $D$ 越大，擴散越快、電流越大。矽：$D_p\approx12$、$D_n\approx34\ \text{cm}^2/\text{s}$。</p>
+<div class="formula">$$J_{p,diff}=-QD_p\frac{dp}{dx},\qquad J_{n,diff}=+QD_n\frac{dn}{dx}$$<p>電洞：梯度為負、電流為正，兩者異號，所以要加負號。電子：梯度為負、電流也為負，兩者同號，所以不加負號。</p></div>
+
+<h2>4. 總電流</h2>
+<div class="formula">$$J_n=Qn\mu_n\mathcal{E}+QD_n\frac{dn}{dx},\qquad J_p=Qp\mu_p\mathcal{E}-QD_p\frac{dp}{dx},\qquad J_{total}=J_n+J_p$$</div>
+
+<h2>5. 愛因斯坦關係式</h2>
+<p>$\mu$ 與 $D$ 的物理源頭相同（載子的熱運動與被晶格散射），所以兩者並不獨立。</p>
+<div class="formula">$$\frac{D_n}{\mu_n}=\frac{D_p}{\mu_p}=\frac{kT}{Q}=V_T$$<p>$V_T$ 稱為熱電壓，與溫度成正比；300 K 時約 25.9 mV。驗證：$34/1350\approx25.2$ mV，$12/480=25.0$ mV。知道 $\mu$ 就能算 $D=\mu V_T$，反之亦然。</p></div>
+
+<h2>6. 重點總整理</h2>
+<table><tr><th></th><th>漂移（電場推）</th><th>擴散（濃度不均推）</th></tr>
+<tr><td>電洞</td><td>$Qp\mu_p\mathcal{E}$</td><td>$-QD_p\,dp/dx$</td></tr>
+<tr><td>電子</td><td>$Qn\mu_n\mathcal{E}$</td><td>$+QD_n\,dn/dx$</td></tr>
+<tr><td>能力參數</td><td>遷移率 $\mu$</td><td>擴散常數 $D$</td></tr></table>
+<p>單位檢查：速度 cm/s $=\mu\,[\text{cm}^2/(\text{V·s})]\times\mathcal{E}\,[\text{V/cm}]$；電流密度 A/cm² $=\rho\,[\text{C/cm}^3]\times v\,[\text{cm/s}]$。</p>
+
+<h2>7. 最容易搞混的兩件事</h2>
+<div class="callout warn">擴散時，電洞公式有負號，電子公式沒有。</div>
+<div class="callout warn">電流方向的定義永遠是正電荷移動的方向，所以電子的電流方向與它的移動方向相反。</div>
+<footer>來源：source-notes/07-drift-diffusion.md　下一講：未加偏壓的 PN 接面。</footer>
+</main></body></html>

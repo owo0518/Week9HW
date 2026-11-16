@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 6 講 半導體材料基本介紹｜電子學講義</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.lbl{font:500 14px "Noto Sans TC",sans-serif;fill:var(--ink)}.band{fill:var(--elec-bg);stroke:var(--elec)}.vband{fill:var(--hole-bg);stroke:var(--hole)}
+.e{fill:var(--elec)}.h{fill:#fff;stroke:var(--hole);stroke-width:2.5}
+@media (prefers-reduced-motion:no-preference){.hop{animation:hop 6s ease-in-out infinite}
+@keyframes hop{0%,15%{transform:translateY(0)}45%,85%{transform:translateY(-110px)}100%{transform:translateY(0)}}}
+</style></head>
+<body><main>
+<p class="top"><a href="../index.html">← 講次列表</a></p>
+<p class="lec">第 6 講</p>
+<h1>半導體材料基本介紹</h1>
+<p class="lead">純矽幾乎不導電，但加一點雜質就能大幅改變導電能力。這一講說明載子從哪來、濃度怎麼算，以及 N 型與 P 型的差別。</p>
+<figure class="hero">
+<svg viewBox="0 0 640 260" role="img" aria-label="能帶圖：電子吸收熱能從價電帶跳到導電帶，留下電洞">
+<rect class="band" x="60" y="15" width="400" height="60"/><rect class="vband" x="60" y="185" width="400" height="60"/>
+<text class="lbl" x="70" y="40">導電帶（自由電子）</text><text class="lbl" x="70" y="230">價電帶（共價鍵中的電子）</text>
+<text class="lbl" x="480" y="135">能隙 E_G = 1.12 eV（矽）</text>
+<line x1="470" y1="78" x2="470" y2="182" stroke="var(--muted)" stroke-dasharray="4 3"/>
+<circle class="h" cx="360" cy="215" r="10"/><circle class="e hop" cx="360" cy="215" r="9"/>
+<text class="lbl" x="380" y="219">電洞留在原處</text>
+</svg>
+<figcaption>動畫：電子吸收熱能跳上導電帶，同時在價電帶留下一個電洞，兩者成對產生。</figcaption></figure>
+
+<h2>1. 本質半導體：電子–電洞對</h2>
+<p>室溫（300 K）下，少數價電子吸收熱能，掙脫共價鍵，這稱為熱激發。</p>
+<table><tr><th>名詞</th><th>意義</th></tr>
+<tr><td>價電帶 Valence band</td><td>被共價鍵束縛的電子所在的能量範圍</td></tr>
+<tr><td>導電帶 Conduction band</td><td>自由電子所在的高能量範圍，可隨電場移動形成電流</td></tr>
+<tr><td>能隙 $E_G$ Band gap</td><td>兩帶之間的能量差，矽 $E_G=1.12\ \text{eV}$</td></tr></table>
+<p>一個電子躍遷會產生一個電子加一個電洞（成對），所以本質半導體的電子濃度等於電洞濃度。兩種載子：導電帶的電子（濃度 $N$）、價電帶的電洞（濃度 $P$），單位 $\text{cm}^{-3}$。</p>
+
+<h2>2. 本質載子濃度 $N_i$</h2>
+<p>矽原子密度約 $5\times10^{22}\ \text{cm}^{-3}$；室溫下 $N_i=P_i\approx1.5\times10^{10}\ \text{cm}^{-3}$，遠小於原子密度，所以純矽導電性差。</p>
+<div class="formula">$$N_i^2=B\,T^3\exp\!\left(-\frac{E_G}{kT}\right)$$<p>B 為材料常數，k 為波茲曼常數，T 為絕對溫度。溫度上升，$N_i$ 暴增。</p></div>
+<div class="callout">半導體元件的特性與溫度強相關。</div>
+
+<h2>3. 熱平衡與質量作用定律</h2>
+<p>熱平衡下的載子濃度加下標 0：$N_0$、$P_0$。</p>
+<div class="formula">$$N_0\,P_0=N_i^2$$<p>本質與外質半導體都成立。</p></div>
+<p>$N_i$ 是本質半導體專屬的常數，只跟材料與溫度有關；$N_0$ 是任何半導體在熱平衡下的電子濃度，會隨摻雜改變。本質半導體是 $N_0=N_i$ 的特例。</p>
+
+<h2>4. 摻雜（Doping）</h2>
+<p>雜質（Impurity）是與半導體本身不同的元素，並不是壞東西。加入雜質的動作稱為摻雜，加入的雜質稱為摻雜物（Dopant）；摻雜後稱為外質半導體（Extrinsic），目的是提高載子濃度、增加導電率。摻雜後整塊半導體仍是電中性。</p>
+
+<h2>5. N 型與 P 型對照</h2>
+<table><tr><th></th><th>N 型</th><th>P 型</th></tr>
+<tr><td>摻雜物</td><td>五價：磷、砷</td><td>三價：硼</td></tr>
+<tr><td>名稱</td><td>Donor（施體，給電子）</td><td>Acceptor（受體，接受電子）</td></tr>
+<tr><td>摻雜濃度</td><td>$N_D$</td><td>$N_A$</td></tr>
+<tr><td>每個原子貢獻</td><td>1 個自由電子</td><td>1 個電洞</td></tr>
+<tr><td>固定離子（不可移動）</td><td>$N_D^+$（淨 $+Q$）</td><td>$N_A^-$（淨 $-Q$）</td></tr>
+<tr><td>多數載子</td><td>電子 $N_{N0}\approx N_D$</td><td>電洞 $P_{P0}\approx N_A$</td></tr>
+<tr><td>少數載子</td><td>電洞 $P_{N0}\approx N_i^2/N_D$</td><td>電子 $N_{P0}\approx N_i^2/N_A$</td></tr></table>
+<p>典型摻雜濃度為 $10^{15}\sim10^{20}\ \text{cm}^{-3}$，遠大於 $N_i$。室溫下摻雜物完全解離，$N_D^+=N_D$、$N_A^-=N_A$。</p>
+<div class="formula">$$N_D=10^{16}\ \Rightarrow\ N_{N0}\approx10^{16},\quad P_{N0}\approx\frac{(1.5\times10^{10})^2}{10^{16}}\approx2.25\times10^{4}\ \text{cm}^{-3}$$<p>電子與電洞差了 12 個數量級。</p></div>
+
+<h2>6. 符號規則</h2>
+<p>以 $N_{N0}$、$P_{P0}$ 為例，由左到右讀：第一個字母是載子種類（N 電子、P 電洞）；下標第一位是所在半導體的類型；下標 0 表示熱平衡（非熱平衡則省略）。</p>
+
+<h2>7. 最容易搞混的三件事</h2>
+<div class="callout warn">電洞（會移動的等效 $+Q$）不等於摻雜離子（$N_D^+$、$N_A^-$，固定不動）。</div>
+<div class="callout warn">本質半導體的電子電洞成對；摻雜產生的載子不成對。</div>
+<div class="callout warn">少數載子雖少但不為零，之後 PN 接面、二極體、電晶體都會用到。</div>
+<footer>來源：source-notes/06-semiconductor-basics.md　下一講：漂移與擴散，也就是載子怎麼形成電流。</footer>
+</main></body></html>
